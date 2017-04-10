@@ -1,0 +1,12 @@
+server:
+  port: 8180
+
+spring:
+  application:
+    name: config-test
+  cloud:
+    config:
+      name: demo2
+      profile: dev
+      label: master
+      uri: http://localhost:8080

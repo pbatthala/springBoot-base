@@ -1,0 +1,73 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <!-- scanner redis properties  -->
+    <!--<context:property-placeholder location="/WEB-INF/properties/redis.properties"/>-->
+
+    <!--<bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">-->
+        <!--<property name="location" value="/WEB-INF/properties/redis.properties"/>-->
+    <!--</bean>-->
+
+    <!--<bean id="poolConfig" class="redis.clients.jedis.JedisPoolConfig">-->
+    <!--<property name="maxIdle" value="${redis.maxIdle}"/>-->
+    <!--<property name="maxActive" value="${redis.maxActive}"/>-->
+    <!--<property name="maxWait" value="${redis.maxWait}"/>-->
+    <!--<property name="testOnBorrow" value="${redis.testOnBorrow}"/>-->
+    <!--</bean>-->
+
+    <!--<bean id="jedisConnectionFactory" class="org.springframework.data.redis.connection.jedis.JedisConnectionFactory"-->
+          <!--p:host-name="${redis.host}"-->
+          <!--p:port="${redis.port}"-->
+            <!--/>-->
+    <!--<bean id="jedisConnectionFactoryWx" class="org.springframework.data.redis.connection.jedis.JedisConnectionFactory"-->
+          <!--p:host-name="${redis.wx.host}"-->
+          <!--p:port="${redis.wx.port}"-->
+            <!--/>-->
+
+    <!--<bean id="redisTemplate" class="org.springframework.data.redis.core.StringRedisTemplate">-->
+        <!--<property name="connectionFactory" ref="jedisConnectionFactory"/>-->
+    <!--</bean>-->
+
+
+    <!-- redis连接池的配置 -->
+    <bean id="jedisPoolConfig" class="redis.clients.jedis.JedisPoolConfig">
+        <property name="maxTotal" value="${redis.pool.maxActive}"/>
+        <property name="maxIdle" value="${redis.pool.maxIdle}"/>
+        <property name="minIdle" value="${redis.pool.minIdle}"/>
+        <property name="maxWaitMillis" value="${redis.pool.maxWait}"/>
+        <property name="testOnBorrow" value="${redis.pool.testOnBorrow}"/>
+        <property name="testOnReturn" value="${redis.pool.testOnReturn}"/>
+    </bean>
+
+    <!-- redis的连接池pool，不是必选项：timeout/password  -->
+    <bean id = "jedisPool" class="redis.clients.jedis.JedisPool">
+        <constructor-arg index="0" ref="jedisPoolConfig"/>
+        <constructor-arg index="1" value="${redis.host}"/>
+        <constructor-arg index="2" value="${redis.port}" type="int"/>
+        <constructor-arg index="3" value="${redis.timeout}" type="int"/>
+        <!--<constructor-arg index="4" value="${redis.password}"/>-->
+    </bean>
+
+
+    <!-- redis连接池的配置 -->
+    <bean id="jedisPoolConfigWx" class="redis.clients.jedis.JedisPoolConfig">
+        <property name="maxTotal" value="${redis.wx.pool.maxActive}"/>
+        <property name="maxIdle" value="${redis.wx.pool.maxIdle}"/>
+        <property name="minIdle" value="${redis.wx.pool.minIdle}"/>
+        <property name="maxWaitMillis" value="${redis.wx.pool.maxWait}"/>
+        <property name="testOnBorrow" value="${redis.wx.pool.testOnBorrow}"/>
+        <property name="testOnReturn" value="${redis.wx.pool.testOnReturn}"/>
+    </bean>
+
+    <!-- redis的连接池pool，不是必选项：timeout/password  -->
+    <bean id = "jedisPoolWx" class="redis.clients.jedis.JedisPool">
+        <constructor-arg index="0" ref="jedisPoolConfigWx"/>
+        <constructor-arg index="1" value="${redis.wx.host}"/>
+        <constructor-arg index="2" value="${redis.wx.port}" type="int"/>
+        <constructor-arg index="3" value="${redis.wx.timeout}" type="int"/>
+        <!--<constructor-arg index="4" value="${redis.wx.password}"/>-->
+    </bean>
+
+</beans>
