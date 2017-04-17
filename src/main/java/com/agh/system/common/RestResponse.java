@@ -17,12 +17,12 @@ public class RestResponse<T> {
     public RestResponse() {
     }
 
-    public RestResponse(String msg, int errno) {
+    public RestResponse(int errno, String msg) {
         this.errno = errno;
         this.error = msg;
     }
 
-    public RestResponse(T body, int errno) {
+    public RestResponse(int errno, T body) {
         this.errno = errno;
         this.body = body;
     }
