@@ -10,6 +10,7 @@ import redis.clients.jedis.JedisPool;
 import javax.annotation.Resource;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 /**
@@ -24,8 +25,10 @@ public class RedisController {
 
     @RequestMapping(value = "/pool")
     public RestResponse ping() {
-        Map<String, Object> data = new HashMap<>();
-        data.put("numActive", Long.valueOf(jedisPool.getNumActive()));
+        Map<String, Object> data = new LinkedHashMap<>();
+        data.put("numActive", jedisPool.getNumActive());
+        data.put("numIdle", jedisPool.getNumIdle());
+        data.put("numWaiters",  jedisPool.getNumWaiters());
         return new RestResponse(data);
     }
 
@@ -47,6 +50,5 @@ public class RedisController {
             }
         }
     }
-
 
 }
