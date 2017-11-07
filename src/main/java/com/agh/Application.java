@@ -15,6 +15,7 @@ import org.springframework.session.data.redis.config.annotation.web.http.EnableR
 import javax.annotation.Resource;
 import java.text.MessageFormat;
 import java.util.Date;
+import java.util.Map;
 
 @EnableDiscoveryClient
 @SpringBootApplication
@@ -36,5 +37,15 @@ public class Application implements CommandLineRunner {
     @Override
     public void run(String... strings) throws Exception {
         logger.info(MessageFormat.format("启动时间:{0} 配置来源{1}",new Date(),myConfig.getFrom()));
+        getEnv();
     }
+
+    public void getEnv(){
+        logger.info("env-----------");
+        Map<String,String> map = System.getenv();
+        for (Map.Entry<String,String> entry:map.entrySet()) {
+            logger.info(MessageFormat.format("key={0},value={1}",entry.getKey(),entry.getValue()));
+        }
+    }
+
 }
