@@ -41,11 +41,12 @@ public class Application implements CommandLineRunner {
     }
 
     public void getEnv(){
-        logger.info("env-----------");
+        logger.info("env-----------start");
         Map<String,String> map = System.getenv();
         for (Map.Entry<String,String> entry:map.entrySet()) {
             logger.info(MessageFormat.format("key={0},value={1}",entry.getKey(),entry.getValue()));
         }
+        logger.info("env-----------end.");
     }
 
 }
